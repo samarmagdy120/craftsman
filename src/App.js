@@ -12,16 +12,15 @@ import Signup_Customer from "./Components/Registration/Customer/Signup_Customer"
 import Login from "./Components/Registration/Login/Login";
 import Footer from "./Components/Footer/footer";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { AuthState } from "./context/auth/AuthState";
-
+import AuthState from "./context/auth/AuthState";
 function App() {
   return (
-    <Router>
-      <AuthState>
-        <Home />
-        <ScrollToTop />
+    <AuthState>
+      <Router>
         <Navbartop />
         <NavBar />
+        <ScrollToTop />
+
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/services" component={Services} />
@@ -33,8 +32,8 @@ function App() {
           <Route path="/safetyMeasures" component={safetyMeasures} />
         </Switch>
         <Footer />
-      </AuthState>
-    </Router>
+      </Router>
+    </AuthState>
   );
 }
 export default App;

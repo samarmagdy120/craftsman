@@ -13,17 +13,15 @@ const url = "https://services-works.herokuapp.com/api/auth";
 
 export const AuthContext = createContext();
 
-const initialState = {
-  userAuth: null,
-  errors: null,
-};
-
-export const AuthState = ({ children }) => {
+const AuthState = (props) => {
+  const initialState = {
+    userAuth: null,
+    errors: null,
+  };
   const [state, dispatch] = useReducer(authReducer, initialState);
 
-  //regiister user
-
-  const registerUser = async (userData) => {
+  //registerCraftMan
+  const registerCraftMan = async (userData) => {
     const config = {
       header: {
         "Content-Type": "application/json",
@@ -36,17 +34,16 @@ export const AuthState = ({ children }) => {
         type: SUCCESS_REGISTER,
         payload: res.data,
       });
-    } catch (error) {
+    } catch (err) {
       dispatch({
         type: FAIL_REGISTER,
-        payload: error.response.data,
+        payload: err.response.data,
       });
     }
   };
 
-  //login user
-
-  const loginUser = async (userData) => {
+  //loginCraftMan
+  const loginCraftMan = async (userData) => {
     const config = {
       header: {
         "Content-Type": "application/json",
@@ -55,28 +52,29 @@ export const AuthState = ({ children }) => {
     try {
       const res = await axios.post(`${url}/login`, userData, config);
       console.log(res);
-
       dispatch({
         type: SUCCESS_LOGIN,
         payload: res.data,
       });
-    } catch (error) {
+    } catch (err) {
       dispatch({
         type: FAIL_LOGIN,
-        payload: error.response.data,
+        payload: err.response.data,
       });
     }
   };
   return (
-    <AuthContext.provider
+    <AuthContext.Provider
       value={{
         userAuth: state.userAuth,
         errors: state.errors,
-        registerUser,
-        loginUser,
+        registerCraftMan,
+        loginCraftMan,
       }}
     >
-      {children}
-    </AuthContext.provider>
+      {props.children}
+    </AuthContext.Provider>
   );
 };
+
+export default AuthState;

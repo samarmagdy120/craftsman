@@ -6,8 +6,8 @@ import "../Craftsman/Signup_Craftsman.css";
 
 const AuthContext = createContext();
 
-const Signup_Craftsman = () => {
-  const { errors, registerUser, userAuth } = useContext(AuthContext);
+const Signup_Craftsman = (props) => {
+  const { userAuth, errors, registerCraftMan } = useContext(AuthContext);
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
@@ -40,7 +40,7 @@ const Signup_Craftsman = () => {
     if (password !== password2) {
       console.log("Password does not match");
     } else {
-      registerUser({
+      registerCraftMan({
         email,
         password,
       });
@@ -153,11 +153,10 @@ const Signup_Craftsman = () => {
           <button type="submit" className="btn btn-dark btn-lg btn-block">
             سجل الان
           </button>
-          <p className="forgot-password text-right">
-            لدي حساب بالفعل <Link to="/Login">تسجيل دخول</Link>
-          </p>
         </Form>
-        <div className="question"></div>
+        <p className="question forgot-password text-right">
+          لدي حساب بالفعل <Link to="/Login">تسجيل دخول</Link>
+        </p>{" "}
       </div>
     </div>
   );

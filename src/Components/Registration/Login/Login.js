@@ -6,8 +6,8 @@ import logo from "../../img/logo.png";
 
 const AuthContext = createContext();
 
-const Login = () => {
-  const [errors, loginUser, userAuth] = useContext(AuthContext);
+const Login = (props) => {
+  const { errors, loginCraftMan, userAuth } = useContext(AuthContext);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -20,7 +20,7 @@ const Login = () => {
 
   const handlesubmit = (e) => {
     e.preventDefault();
-    loginUser({ email, password });
+    loginCraftMan({ email, password });
   };
 
   return (
@@ -35,6 +35,8 @@ const Login = () => {
             type="email"
             className="form-control"
             placeholder="أدخل البريد الالكتروني"
+            onChange={handleChange}
+            value={email}
           />
         </div>
 
@@ -43,6 +45,8 @@ const Login = () => {
             type="password"
             className="form-control"
             placeholder="أدخل كلمة المرور"
+            onChange={handleChange}
+            value={password}
           />
         </div>
 
@@ -62,10 +66,10 @@ const Login = () => {
         <button type="submit" className="btn btn-dark btn-lg btn-block">
           تسجيل دخول
         </button>
-        <p className="forgot-password text-right">
-          هل نسيت <Link to="#">كلمة السر ؟</Link>
-        </p>
       </Form>
+      <p className="question forgot-password text-right">
+        لدي حساب بالفعل <Link to="/Signup_Customer">تسجيل دخول</Link>
+      </p>{" "}
     </div>
   );
 };
