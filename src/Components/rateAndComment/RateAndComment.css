@@ -1,0 +1,9 @@
+.RateAndComment input {
+  float: right;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #ccc;
+}
+.comment-view {
+  float: right;
+}

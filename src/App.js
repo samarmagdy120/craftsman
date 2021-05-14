@@ -14,6 +14,8 @@ import Footer from "./Components/Footer/footer";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import AuthState from "./context/auth/AuthState";
 import JobState from "./context/jobs/JobState";
+import Profilecraftman from "./Components/profilecraftman/Profilecraftman";
+
 function App() {
   return (
     <AuthState>
@@ -24,7 +26,7 @@ function App() {
           <ScrollToTop />
 
           <Switch>
-            <Route exact path="/" component={Home} />
+            <Route exact path="/" component={Profilecraftman} />
             <Route path="/services" component={Services} />
             <Route path="/About" component={About} />
             <Route path="/Contact" component={Contact} />

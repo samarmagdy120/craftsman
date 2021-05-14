@@ -19,11 +19,11 @@ const JobState = (props) => {
   // get jobs
   const getJobs = async () => {
     try {
-      const res = await axios.get(`S{url}`);
-      console.log(res.data);
+      const res = await axios.get(`${url}`);
+      //   console.log(res.data);
       dispatch({ type: JOB_LIST_SUCCESS, payload: res.data.jobs });
     } catch (error) {
-      console.log(error);
+      //   console.log(error);
       dispatch({ type: JOB_LIST_FAIL, payload: error.message });
     }
   };

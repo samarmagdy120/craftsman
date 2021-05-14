@@ -1,0 +1,13 @@
+.profilecraft {
+  background: linear-gradient(
+    90deg,
+    rgba(16, 56, 92, 1) 5%,
+    rgba(6, 136, 136, 1) 30%,
+    rgba(243, 198, 35, 1) 90%,
+    rgba(247, 231, 74, 1) 100%
+  );
+}
+
+.profilecraft-p {
+  background-color: #f3f6ff;
+}

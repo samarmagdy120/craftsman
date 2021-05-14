@@ -43,6 +43,12 @@ const Signup_Craftsman = (props) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
+  const handleSelect = (e) => {
+    let index = e.target.selectedIndex;
+    let ele = e.target.childNodes[index];
+    console.log(ele.id);
+  };
+
   const handlesubmit = (e) => {
     e.preventDefault();
     if (password !== password2) {
@@ -132,13 +138,14 @@ const Signup_Craftsman = (props) => {
               value={address}
             />
           </div>
-          {/* 
-          <select name="jobs" id="cars" value={jobs}>
-            <option value="volvo">{`${url}/jobs/id:`}</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
-          </select> */}
+
+          <select name="jobs" onChange={handleSelect}>
+            {Jobs.map((item) => (
+              <option key={item._id} id={item._id}>
+                {item.name}
+              </option>
+            ))}
+          </select>
 
           <div className="form-group">
             <input
