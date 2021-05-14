@@ -1,10 +1,10 @@
-import React, { useContext, useState, createContext } from "react";
+import React, { useContext, useState } from "react";
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import "../Craftsman/Signup_Craftsman.css";
-
-const AuthContext = createContext();
+import {AuthContext} from '../../../context/auth/AuthState' 
+// const AuthContext = createContext();
 
 const Signup_Craftsman = (props) => {
   const { userAuth, errors, registerCraftMan } = useContext(AuthContext);
