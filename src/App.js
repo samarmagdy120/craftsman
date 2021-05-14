@@ -13,26 +13,29 @@ import Login from "./Components/Registration/Login/Login";
 import Footer from "./Components/Footer/footer";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import AuthState from "./context/auth/AuthState";
+import JobState from "./context/jobs/JobState";
 function App() {
   return (
     <AuthState>
-      <Router>
-        <Navbartop />
-        <NavBar />
-        <ScrollToTop />
+      <JobState>
+        <Router>
+          <Navbartop />
+          <NavBar />
+          <ScrollToTop />
 
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/services" component={Services} />
-          <Route path="/About" component={About} />
-          <Route path="/Contact" component={Contact} />
-          <Route path="/Signup_Craftsman" component={Signup_Craftsman} />
-          <Route path="/Signup_Customer" component={Signup_Customer} />
-          <Route path="/Login" component={Login} />
-          <Route path="/safetyMeasures" component={safetyMeasures} />
-        </Switch>
-        <Footer />
-      </Router>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/services" component={Services} />
+            <Route path="/About" component={About} />
+            <Route path="/Contact" component={Contact} />
+            <Route path="/Signup_Craftsman" component={Signup_Craftsman} />
+            <Route path="/Signup_Customer" component={Signup_Customer} />
+            <Route path="/Login" component={Login} />
+            <Route path="/safetyMeasures" component={safetyMeasures} />
+          </Switch>
+          <Footer />
+        </Router>
+      </JobState>
     </AuthState>
   );
 }

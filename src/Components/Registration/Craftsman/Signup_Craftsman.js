@@ -1,33 +1,41 @@
-import React, { useContext, useState, createContext } from "react";
+import React, { useContext, useState, createContext, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 import "../Craftsman/Signup_Craftsman.css";
-
-const AuthContext = createContext();
-
+import { AuthContext } from "../../../context/auth/AuthState";
+import { JobContext } from "../../../context/jobs/JobState";
 const Signup_Craftsman = (props) => {
   const { userAuth, errors, registerCraftMan } = useContext(AuthContext);
+
+  const { errors: jobError, getJobs, Jobs, loading } = useContext(JobContext);
+
+  useEffect(() => {
+    getJobs();
+  }, []);
+
+  console.log(Jobs);
+
   const [user, setUser] = useState({
-    firstName: "",
-    lastName: "",
+    fname: "",
+    lname: "",
     nationalId: "",
     mobile: "",
     email: "",
     address: "",
-    job: "",
+    jobs: "",
     password: "",
     password2: "",
   });
 
   const {
-    firstName,
-    lastName,
+    fname,
+    lname,
     nationalId,
     mobile,
     email,
     address,
-    job,
+    jobs,
     password,
     password2,
   } = user;
@@ -41,8 +49,15 @@ const Signup_Craftsman = (props) => {
       console.log("Password does not match");
     } else {
       registerCraftMan({
+        fname,
+        lname,
+        nationalId,
+        mobile,
         email,
+        address,
+        jobs,
         password,
+        password2,
       });
     }
   };
@@ -57,9 +72,9 @@ const Signup_Craftsman = (props) => {
               type="text"
               className="form-control"
               placeholder="الاسم الاول"
-              name="firstName"
+              name="fname"
               onChange={handleChange}
-              value={firstName}
+              value={fname}
             />
           </div>
 
@@ -68,9 +83,9 @@ const Signup_Craftsman = (props) => {
               type="text"
               className="form-control"
               placeholder="الاسم الاخير"
-              name="lastName"
+              name="lname"
               onChange={handleChange}
-              value={lastName}
+              value={lname}
             />
           </div>
 
@@ -117,17 +132,13 @@ const Signup_Craftsman = (props) => {
               value={address}
             />
           </div>
-
-          <div className="form-group">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="المهنه"
-              name="job"
-              onChange={handleChange}
-              value={job}
-            />
-          </div>
+          {/* 
+          <select name="jobs" id="cars" value={jobs}>
+            <option value="volvo">{`${url}/jobs/id:`}</option>
+            <option value="saab">Saab</option>
+            <option value="mercedes">Mercedes</option>
+            <option value="audi">Audi</option>
+          </select> */}
 
           <div className="form-group">
             <input

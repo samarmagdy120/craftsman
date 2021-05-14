@@ -7,7 +7,7 @@ import {
   SUCCESS_LOGIN,
   FAIL_REGISTER,
   FAIL_LOGIN,
-} from "./types";
+} from "../types";
 
 const url = "https://services-works.herokuapp.com/api/auth";
 
@@ -39,6 +39,7 @@ const AuthState = (props) => {
         type: FAIL_REGISTER,
         payload: err.response.data,
       });
+      console.log(err);
     }
   };
 
