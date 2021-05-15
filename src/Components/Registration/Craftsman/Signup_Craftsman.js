@@ -1,49 +1,83 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, createContext, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
 import "../Craftsman/Signup_Craftsman.css";
-import {AuthContext} from '../../../context/auth/AuthState' 
-// const AuthContext = createContext();
-
+import { AuthContext } from "../../../context/auth/AuthState";
+import { JobContext } from "../../../context/jobs/JobState";
 const Signup_Craftsman = (props) => {
   const { userAuth, errors, registerCraftMan } = useContext(AuthContext);
-  const [user, setUser] = useState({
-    firstName: "",
-    lastName: "",
-    nationalId: "",
-    mobile: "",
-    email: "",
-    address: "",
-    job: "",
-    password: "",
-    password2: "",
-  });
 
-  const {
-    firstName,
-    lastName,
-    nationalId,
-    mobile,
-    email,
-    address,
-    job,
-    password,
-    password2,
-  } = user;
-  const handleChange = (e) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+  const { errors: jobError, getJobs, Jobs, loading } = useContext(JobContext);
+
+  useEffect(() => {
+    getJobs();
+  }, []);
+
+  console.log(Jobs);
+
+  const [fname, setFname]=useState("");
+  const [lname, setLname]=useState("");
+  const [nationalId, setNationalId]=useState(null);
+  const [phone, setPhone]=useState(null);
+  const [email, setEmail]=useState("");
+  const [address, setAddress]=useState("");
+  const [job, setJob]=useState(null);
+  const [password, setPassword]=useState("");
+  const [password2, setPassword2]=useState("");
+
+  // const [user, setUser] = useState({
+  //   fname: "",
+  //   lname: "",
+  //   nationalId: "",
+  //   mobile: "",
+  //   email: "",
+  //   address: "",
+  //   jobs: "",
+  //   password: "",
+  //   password2: "",
+  // });
+
+  // const {
+  //   fname,
+  //   lname,
+  //   nationalId,
+  //   mobile,
+  //   email,
+  //   address,
+  //   job,
+  //   password,
+  //   password2,
+  // } = user;
+
+    const handleSelect = (e) => {
+    let index = e.target.selectedIndex;
+    let ele = e.target.childNodes[index];
+    console.log(ele.id);
+    setJob(ele.id)
+    console.log(job);
   };
+
+  // const handleChange = (e) => {
+  //   setUser({ ...user, [e.target.name]: e.target.value });
+  // };
 
   const handlesubmit = (e) => {
     e.preventDefault();
     if (password !== password2) {
       console.log("Password does not match");
     } else {
-      registerCraftMan({
-        email,
-        password,
-      });
+      registerCraftMan(
+        {
+          fname,
+          lname,
+          email,
+          job,
+          password,
+          phone,
+          nationalId,
+          address
+        }
+      );
     }
   };
   return (
@@ -57,9 +91,9 @@ const Signup_Craftsman = (props) => {
               type="text"
               className="form-control"
               placeholder="الاسم الاول"
-              name="firstName"
-              onChange={handleChange}
-              value={firstName}
+              name="fname"
+              onChange={(e)=>setFname(e.target.value)}
+              value={fname}
             />
           </div>
 
@@ -68,9 +102,9 @@ const Signup_Craftsman = (props) => {
               type="text"
               className="form-control"
               placeholder="الاسم الاخير"
-              name="lastName"
-              onChange={handleChange}
-              value={lastName}
+              name="lname"
+              onChange={(e)=>setLname(e.target.value)}
+              value={lname}
             />
           </div>
 
@@ -80,7 +114,7 @@ const Signup_Craftsman = (props) => {
               className="form-control"
               placeholder="الرقم القومي"
               name="nationalId"
-              onChange={handleChange}
+              onChange={(e)=>setNationalId(e.target.value)}
               value={nationalId}
             />
           </div>
@@ -90,9 +124,9 @@ const Signup_Craftsman = (props) => {
               type="number"
               className="form-control"
               placeholder="رقم الموبايل"
-              name="mobile"
-              onChange={handleChange}
-              value={mobile}
+              name="phone"
+              onChange={(e)=>setPhone(e.target.value)}
+              value={phone}
             />
           </div>
 
@@ -102,7 +136,7 @@ const Signup_Craftsman = (props) => {
               className="form-control"
               placeholder="البريد الالكتروني"
               name="email"
-              onChange={handleChange}
+              onChange={e=>setEmail(e.target.value)}
               value={email}
             />
           </div>
@@ -113,21 +147,18 @@ const Signup_Craftsman = (props) => {
               className="form-control"
               placeholder="العنوان"
               name="address"
-              onChange={handleChange}
+              onChange={e=>setAddress(e.target.value)}
               value={address}
             />
           </div>
 
-          <div className="form-group">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="المهنه"
-              name="job"
-              onChange={handleChange}
-              value={job}
-            />
-          </div>
+         <select name="jobs" onChange={handleSelect} >
+            {Jobs.length > 0 ?  Jobs.map((item) => (
+              <option key={item._id} id={item._id} >
+                {item.name}
+              </option>
+            )):null}
+          </select>
 
           <div className="form-group">
             <input
@@ -135,7 +166,7 @@ const Signup_Craftsman = (props) => {
               className="form-control"
               placeholder="كلمة المرور"
               name="password"
-              onChange={handleChange}
+              onChange={e=>setPassword(e.target.value)}
               value={password}
             />
           </div>
@@ -145,7 +176,7 @@ const Signup_Craftsman = (props) => {
               className="form-control"
               placeholder="تأكيد كلمة المرور"
               name="password2"
-              onChange={handleChange}
+              onChange={e=>setPassword2(e.target.value)}
               value={password2}
             />
           </div>
