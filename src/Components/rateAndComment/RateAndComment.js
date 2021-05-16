@@ -8,17 +8,43 @@ const RateAndComment = () => {
   return (
     <div className="RateAndComment">
       <div>
-        <input type="text" placeholder="أكتب تعليقا" />
+        <input type="text" placeholder="أكتب تعليقا ......................" />
 
         <ul className="list-unstyled comment-view">
           <li>
-            <img src={state.profileImg} />
-            <p>hbbbbbbbbbbbb</p>
+            <img
+              src={state.profileImg}
+              style={{
+                margin: "auto",
+                borderRadius: "50%",
+                width: "43px",
+                textAlign: "center",
+                position: "relative",
+                top: -"18px",
+              }}
+            />
+            <div className="comment">
+              <h3>mohamed ahmed</h3>
+              <p>اتيتبينبنىيب منمنيسن سينسي</p>
+            </div>
           </li>
           <li>
-            <img src />
-            <p>hbbbbbbbbbbbb</p>
-          </li>{" "}
+            <img
+              src={state.profileImg}
+              style={{
+                margin: "auto",
+                borderRadius: "50%",
+                width: "43px",
+                textAlign: "center",
+                position: "relative",
+                top: -"18px",
+              }}
+            />
+            <div className="comment">
+              <h3>mohamed ahmed</h3>
+              <p>اتيتبينبنىيب منمنيسن سينسي</p>
+            </div>
+          </li>
         </ul>
       </div>
       <div></div>

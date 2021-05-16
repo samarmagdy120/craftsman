@@ -1,4 +1,4 @@
-import { JOB_LIST_SUCCESS, JOB_LIST_FAIL } from "../types";
+import { JOB_LIST_SUCCESS, JOB_LIST_FAIL } from "../auth/types";
 
 export default (state, action) => {
   switch (action.type) {

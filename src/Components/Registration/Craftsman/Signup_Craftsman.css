@@ -2,7 +2,25 @@
   box-sizing: border-box;
 }
 
+.alert-danger {
+  color: #721c24;
+  background-color: #ffffff !important;
+  border-color: #ffffff !important;
+  width: 36% !important;
+  margin: auto;
+  border-radius: 14px;
+  margin-bottom: 21px;
+}
 .Signup_Craftsman {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 800px;
+  display: flex;
+  font-weight: 400;
+  font-family: sans-serif;
   background: rgb(16, 56, 92);
   background: _webkit_linear-gradient(
     90deg,
@@ -21,8 +39,16 @@
 }
 .RegistationForm {
   background-color: #f3f6ff;
+  width: 400px;
+  height: 650px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  direction: rtl;
   border-radius: 15px;
   box-shadow: 9px 7px 20px #10385c;
+  margin: auto;
 }
 .Signup_Craftsman .RegistationForm h1 {
   margin-bottom: 25px;

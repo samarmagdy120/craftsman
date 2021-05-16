@@ -32,7 +32,7 @@ class Home extends Component {
           <div className="wave"></div>
         </div>
 
-        <Jumbotron fluid>
+        <Jumbotron fluid style={{ backgroundColor: "#fff" }}>
           <Container>
             <h2>صنايعي خبره : انضم الينا الان كعميل</h2>
             <p>
@@ -43,7 +43,10 @@ class Home extends Component {
           </Container>
         </Jumbotron>
 
-        <section className="aboutSec">
+        <section
+          className="aboutSec"
+          style={{ backgroundColor: "#fff", marginTop: "-33px" }}
+        >
           <Container>
             <Row>
               <Col fluid className="l-aboutSec">
@@ -123,7 +126,7 @@ class Home extends Component {
           </Container>
         </section>
 
-        <section className="aboutSec2">
+        <section className="aboutSec2" style={{ backgroundColor: "#fff" }}>
           <Container>
             <Row>
               <Col>
@@ -181,7 +184,10 @@ class Home extends Component {
           </Container>
         </section>
 
-        <Jumbotron fluid>
+        <Jumbotron
+          fluid
+          style={{ backgroundColor: "#fff", marginTop: "-33px" }}
+        >
           <Container>
             <h3>
               صنايعي خبره : انضم الينا الان كصنايعي
@@ -195,7 +201,10 @@ class Home extends Component {
           </Container>
         </Jumbotron>
 
-        <section className="aboutSec">
+        <section
+          className="aboutSec"
+          style={{ backgroundColor: "#fff", marginTop: "-33px" }}
+        >
           <Container>
             <Row>
               <Col fluid className="l-aboutSec">
@@ -273,7 +282,7 @@ class Home extends Component {
           </Container>
         </section>
 
-        <section className="aboutSec2">
+        <section className="aboutSec2" style={{ backgroundColor: "#fff" }}>
           <Container>
             <Row>
               <Col>
@@ -322,7 +331,10 @@ class Home extends Component {
           </Container>
         </section>
 
-        <section className="aboutSec2">
+        <section
+          className="aboutSec2"
+          style={{ backgroundColor: "#fff", marginTop: "-33px" }}
+        >
           <Container>
             <Row>
               <Col fluid className="r-aboutSec2">
@@ -370,7 +382,10 @@ class Home extends Component {
           </Container>
         </section>
 
-        <Jumbotron fluid>
+        <Jumbotron
+          fluid
+          style={{ backgroundColor: "#fff", marginBottom: "0px" }}
+        >
           <Container>
             <h3>
               تابع الآخبار

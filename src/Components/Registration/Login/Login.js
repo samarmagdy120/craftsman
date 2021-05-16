@@ -3,11 +3,10 @@ import "./Login.css";
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import logo from "../../img/logo.png";
-
-const AuthContext = createContext();
+import { AuthContext } from "../../../context/auth/AuthState";
 
 const Login = (props) => {
-  const { errors, loginCraftMan, userAuth } = useContext(AuthContext);
+  const { errors, login, userAuth } = useContext(AuthContext);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -20,12 +19,15 @@ const Login = (props) => {
 
   const handlesubmit = (e) => {
     e.preventDefault();
-    loginCraftMan({ email, password });
+    login({ email, password });
+    if (!errors) {
+      props.history.push("/");
+    }
   };
 
   return (
     <div className="Login">
-      <Form className="RegistationForm">
+      <Form className="RegistationForm" onSubmit={handlesubmit}>
         <h1>تسجيل دخول</h1>
 
         <img src={logo} alt="" />
@@ -36,6 +38,7 @@ const Login = (props) => {
             className="form-control"
             placeholder="أدخل البريد الالكتروني"
             onChange={handleChange}
+            name="email"
             value={email}
           />
         </div>
@@ -46,6 +49,7 @@ const Login = (props) => {
             className="form-control"
             placeholder="أدخل كلمة المرور"
             onChange={handleChange}
+            name="password"
             value={password}
           />
         </div>

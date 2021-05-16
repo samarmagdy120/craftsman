@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ScrollToTop from "./Components/ScrollToTop/ScrollToTop";
 import safetyMeasures from "./Components/SafetyMeasures/safetyMeasures";
 import Navbartop from "./Components/Navbartop/Navbartop";
@@ -12,11 +12,27 @@ import Signup_Customer from "./Components/Registration/Customer/Signup_Customer"
 import Login from "./Components/Registration/Login/Login";
 import Footer from "./Components/Footer/footer";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import setAuthToken from "./utils/setAuthToken";
 import AuthState from "./context/auth/AuthState";
 import JobState from "./context/jobs/JobState";
+import AllCrafts from "./Components/allcraft/AllCrafts";
 import Profilecraftman from "./Components/profilecraftman/Profilecraftman";
 
 function App() {
+  useEffect(() => {
+    const isAuth = async () => {
+      var token = await localStorage.token;
+      console.log(token);
+      if (token) {
+        setAuthToken(token);
+        console.log("isAuthed");
+      } else {
+        console.log("is not Authed");
+      }
+    };
+    isAuth();
+  }, []);
+
   return (
     <AuthState>
       <JobState>
@@ -26,8 +42,10 @@ function App() {
           <ScrollToTop />
 
           <Switch>
-            <Route exact path="/" component={Profilecraftman} />
+            <Route exact path="/" component={AllCrafts} />
             <Route path="/services" component={Services} />
+            <Route path="/profilecraftman/:id" component={Profilecraftman} />
+
             <Route path="/About" component={About} />
             <Route path="/Contact" component={Contact} />
             <Route path="/Signup_Craftsman" component={Signup_Craftsman} />

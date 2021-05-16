@@ -2,7 +2,7 @@ import React, { useReducer, createContext } from "react";
 import axios from "axios";
 import jobReducer from "./jobReducer";
 
-import { JOB_LIST_SUCCESS, JOB_LIST_FAIL } from "../types";
+import { JOB_LIST_SUCCESS, JOB_LIST_FAIL } from "../auth/types";
 
 const url = "https://services-works.herokuapp.com/api/jobs";
 
