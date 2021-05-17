@@ -11,8 +11,11 @@ import {
   LOAD_USER_FAIL, 
   LIST_USERS_SUCCESS,
   LIST_USERS_FAIL,
+  CLEAR_ERRORS,
+  RETURN_SECCESS,
   USER_LOGOUT
 } from "../types";
+
 
 const url = "https://services-works.herokuapp.com/api/auth";
 
@@ -20,16 +23,23 @@ export const AuthContext = createContext();
 
 const AuthState = (props) => {
   const initialState = {
+    token: localStorage.getItem('token'),
     userAuth: null,
     errors: null,
+    success : false,
     user : null,
     users :[]
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
 
    const getUserData=async()=>{
+    const config = {
+      header: {
+        "Authorization": "Bearer "+ localStorage.token,
+      },
+    }; 
     try {
-      const res = await axios.get(`${url}//user`);
+      const res = await axios.get(`${url}//user`,config);
       console.log(res); 
       dispatch({
         type :LOAD_USER_SUCCESS,
@@ -48,43 +58,49 @@ const AuthState = (props) => {
       },
     };
     try {
-      const res = await axios.post(`${url}/register-provider`, userData, config);
+      const res = await axios.post(
+        `${url}/register-provider`,
+        userData,
+        config
+      );
       // console.log(res);
       dispatch({
         type: SUCCESS_REGISTER,
         payload: res.data,
       });
+      // getUserData()
     } catch (err) {
       dispatch({
         type: FAIL_REGISTER,
-        payload: err.response.data,
+        payload: err.response.data.message,
       });
       console.log(err);
     }
   };
 
-    //registerCraftMan
-    const registerClient = async (userData) => {
-      const config = {
-        header: {
-          "Content-Type": "application/json",
-        },
-      };
-      try {
-        const res = await axios.post(`${url}/register-user`, userData, config);
-        console.log(res);
-        dispatch({
-          type: SUCCESS_REGISTER,
-          payload: res.data,
-        });
-      } catch (err) {
-        dispatch({
-          type: FAIL_REGISTER,
-          payload: err.response.data,
-        });
-        console.log(err);
-      }
+  //registerCraftMan
+  const registerClient = async (userData) => {
+    const config = {
+      header: {
+        "Content-Type": "application/json",
+      },
     };
+    try {
+      const res = await axios.post(`${url}/register-user`, userData, config);
+      console.log(res);
+      dispatch({
+        type: SUCCESS_REGISTER,
+        payload: res.data,
+      });
+      // getUserData()
+    } catch (err) {
+      dispatch({
+        type: FAIL_REGISTER,
+        payload: err.response.data.message,
+      });
+      console.log(err);
+    }
+  };
 
   //loginCraftMan
   const login = async (userData) => {
@@ -96,6 +112,7 @@ const AuthState = (props) => {
     try {
       const res = await axios.post(`${url}/login`, userData, config);
       console.log(res);
+      getUserData()
       dispatch({
         type: SUCCESS_LOGIN,
         payload: res.data,
@@ -108,7 +125,7 @@ const AuthState = (props) => {
       });
     }
   };
-
+ 
   const getUsersViaJobID=async(id)=>{
     try {
       const res = await axios.post(`${url}/${id}`);
@@ -124,9 +141,19 @@ const AuthState = (props) => {
     }
   }
 
+  const clearError=()=>{
+    dispatch({ type: CLEAR_ERRORS });
+  }
+
+  const refershSuccess=()=>{
+    dispatch(
+      { type: RETURN_SECCESS }
+    )
+  }
+
    const logout =()=> {
      dispatch({ type: USER_LOGOUT });
-     localStorage.removeItem("token");
+    //  localStorage.removeItem("token");
       document.location.href = "/login";
   };
   return (
@@ -136,11 +163,15 @@ const AuthState = (props) => {
         user : state.user,
         errors: state.errors,
         users : state.users,
+        success : state.success,
+        token : state.token,
         registerCraftMan,
         login,
         registerClient,
         getUserData,
         getUsersViaJobID,
+        clearError,
+        refershSuccess,
         logout
       }}
     >

@@ -4,26 +4,34 @@ import { Link } from "react-router-dom";
 import "../Craftsman/Signup_Craftsman.css";
 import { AuthContext } from "../../../context/auth/AuthState";
 import { JobContext } from "../../../context/jobs/JobState";
+import { Alert } from "react-bootstrap";
+
 const Signup_Craftsman = (props) => {
-  const { userAuth, errors, registerCraftMan } = useContext(AuthContext);
+  const [rating, setRating] = useState(0);
+  const [rating2, setRating2] = useState(0);
+  const { userAuth, errors, registerCraftMan ,success} = useContext(AuthContext);
 
   const { errors: jobError, getJobs, Jobs, loading } = useContext(JobContext);
 
   useEffect(() => {
+    if (success === true) {
+      props.history.push('/')
+        }
     getJobs();
-  }, []);
-
+    // eslint-disable-next-line
+  }, [success,AuthContext]);
+ 
   console.log(Jobs);
 
-  const [fname, setFname]=useState("");
-  const [lname, setLname]=useState("");
-  const [nationalId, setNationalId]=useState(null);
-  const [phone, setPhone]=useState(null);
-  const [email, setEmail]=useState("");
-  const [address, setAddress]=useState("");
-  const [job, setJob]=useState(null);
-  const [password, setPassword]=useState("");
-  const [password2, setPassword2]=useState("");
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
+  const [nationalId, setNationalId] = useState(null);
+  const [phone, setPhone] = useState(null);
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [job, setJob] = useState(null);
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
 
   // const [user, setUser] = useState({
   //   fname: "",
@@ -49,11 +57,11 @@ const Signup_Craftsman = (props) => {
   //   password2,
   // } = user;
 
-    const handleSelect = (e) => {
+  const handleSelect = (e) => {
     let index = e.target.selectedIndex;
     let ele = e.target.childNodes[index];
     console.log(ele.id);
-    setJob(ele.id)
+    setJob(ele.id);
     console.log(job);
   };
 
@@ -61,28 +69,29 @@ const Signup_Craftsman = (props) => {
   //   setUser({ ...user, [e.target.name]: e.target.value });
   // };
 
-  const handlesubmit = (e) => {
+  const handlesubmit =  (e) => {
     e.preventDefault();
     if (password !== password2) {
       console.log("Password does not match");
     } else {
-      registerCraftMan(
-        {
-          fname,
-          lname,
-          email,
-          job,
-          password,
-          phone,
-          nationalId,
-          address
-        }
-      );
+       registerCraftMan({
+        fname,
+        lname,
+        email,
+        job,
+        password,
+        phone,
+        nationalId,
+        address,
+      });
     }
   };
+  console.log(errors);
+  console.log(success);
   return (
     <div className="Signup_Craftsman">
       <div className="container">
+        {errors !== null ? <Alert variant="danger">{errors}</Alert> : null}
         <Form className="RegistationForm" onSubmit={handlesubmit}>
           <h1>انضم الينا كصنايعي !</h1>
 
@@ -92,8 +101,9 @@ const Signup_Craftsman = (props) => {
               className="form-control"
               placeholder="الاسم الاول"
               name="fname"
-              onChange={(e)=>setFname(e.target.value)}
+              onChange={(e) => setFname(e.target.value)}
               value={fname}
+              required
             />
           </div>
 
@@ -103,8 +113,9 @@ const Signup_Craftsman = (props) => {
               className="form-control"
               placeholder="الاسم الاخير"
               name="lname"
-              onChange={(e)=>setLname(e.target.value)}
+              onChange={(e) => setLname(e.target.value)}
               value={lname}
+              required
             />
           </div>
 
@@ -114,8 +125,9 @@ const Signup_Craftsman = (props) => {
               className="form-control"
               placeholder="الرقم القومي"
               name="nationalId"
-              onChange={(e)=>setNationalId(e.target.value)}
+              onChange={(e) => setNationalId(e.target.value)}
               value={nationalId}
+              required
             />
           </div>
 
@@ -125,8 +137,9 @@ const Signup_Craftsman = (props) => {
               className="form-control"
               placeholder="رقم الموبايل"
               name="phone"
-              onChange={(e)=>setPhone(e.target.value)}
+              onChange={(e) => setPhone(e.target.value)}
               value={phone}
+              required
             />
           </div>
 
@@ -136,8 +149,9 @@ const Signup_Craftsman = (props) => {
               className="form-control"
               placeholder="البريد الالكتروني"
               name="email"
-              onChange={e=>setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               value={email}
+              required
             />
           </div>
 
@@ -147,27 +161,35 @@ const Signup_Craftsman = (props) => {
               className="form-control"
               placeholder="العنوان"
               name="address"
-              onChange={e=>setAddress(e.target.value)}
+              onChange={(e) => setAddress(e.target.value)}
               value={address}
+              required
             />
           </div>
-
-         <select name="jobs" onChange={handleSelect} >
-            {Jobs.length > 0 ?  Jobs.map((item) => (
-              <option key={item._id} id={item._id} >
-                {item.name}
-              </option>
-            )):null}
-          </select>
-
+          <div className="form-group" style={{ width: "55%" }}>
+            <select
+              name="jobs"
+              onChange={handleSelect}
+              className="form-control"
+            >
+              {Jobs.length > 0
+                ? Jobs.map((item) => (
+                    <option key={item._id} id={item._id} value={item.name}>
+                      {item.name}
+                    </option>
+                  ))
+                : <option>تحميل...</option>}
+            </select>
+          </div>
           <div className="form-group">
             <input
               type="password"
               className="form-control"
               placeholder="كلمة المرور"
               name="password"
-              onChange={e=>setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               value={password}
+              required
             />
           </div>
           <div className="form-group">
@@ -176,7 +198,7 @@ const Signup_Craftsman = (props) => {
               className="form-control"
               placeholder="تأكيد كلمة المرور"
               name="password2"
-              onChange={e=>setPassword2(e.target.value)}
+              onChange={(e) => setPassword2(e.target.value)}
               value={password2}
             />
           </div>

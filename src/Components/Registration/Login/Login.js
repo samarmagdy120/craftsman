@@ -1,18 +1,26 @@
-import React, { useContext, useState, createContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import "./Login.css";
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Alert } from "react-bootstrap";
 import logo from "../../img/logo.png";
 import { AuthContext } from "../../../context/auth/AuthState";
 
-
 const Login = (props) => {
-  const { errors, login, userAuth } = useContext(AuthContext);
+  const { errors, login, userAuth ,success } = useContext(AuthContext);
+    
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
   const { email, password } = user;
+
+  useEffect(()=>{
+    if (success === true) {
+      props.history.push('/')
+      }
+    // eslint-disable-next-line
+  },[success,AuthContext])
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -21,18 +29,14 @@ const Login = (props) => {
   const handlesubmit = (e) => {
     e.preventDefault();
     login({ email, password });
-    if (!errors) {
-      props.history.push("/");
-    }
   };
 
   return (
     <div className="Login">
+      {errors !== null ? <Alert variant="danger">{errors}</Alert> : null}
       <Form className="RegistationForm" onSubmit={handlesubmit}>
         <h1>تسجيل دخول</h1>
-
         <img src={logo} alt="" />
-
         <div className="form-group">
           <input
             type="email"
@@ -50,7 +54,7 @@ const Login = (props) => {
             className="form-control"
             placeholder="أدخل كلمة المرور"
             onChange={handleChange}
-            name ="password"
+            name="password"
             value={password}
           />
         </div>

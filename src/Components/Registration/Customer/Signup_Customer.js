@@ -1,14 +1,14 @@
-import React,{useState,useContext} from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Alert } from "react-bootstrap";
 import "../Customer/Signup_Customer.css";
 import { AuthContext } from "../../../context/auth/AuthState";
 
-const Signup_Customer = () => {
+const Signup_Customer = (props) => {
+  const { userAuth, errors, registerClient , success } = useContext(AuthContext);
 
-  const { userAuth, errors, registerClient } = useContext(AuthContext);
-
-    const [user, setUser] = useState({
+  const [user, setUser] = useState({
     fname: "",
     lname: "",
     nationalId: "",
@@ -18,40 +18,38 @@ const Signup_Customer = () => {
     password: "",
   });
 
-  const {
-    fname,
-    lname,
-    nationalId,
-    phone,
-    email,
-    address,
-    password,
-  } = user;
+  const { fname, lname, nationalId, phone, email, address, password } = user;
 
-    const handleChange = (e) => {
+
+  useEffect(()=>{
+    if (success === true) {
+      props.history.push('/')
+      }
+    // eslint-disable-next-line
+  },[success,AuthContext])
+
+  const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  const handlesubmit = (e) => {
+  const handlesubmit = async (e) => {
     e.preventDefault();
-      registerClient(
-        {
-          fname,
-          lname,
-          email,
-          password,
-          phone,
-          nationalId,
-          address
-        }
-      );
-    }
- 
+    await registerClient({
+      fname,
+      lname,
+      email,
+      password,
+      phone,
+      nationalId,
+      address,
+    });
+  };
+
   return (
     <div className="Signup_Customer">
-      <Form className="RegistationForm" onSubmit={handlesubmit} >
+      <Form className="RegistationForm" onSubmit={handlesubmit}>
         <h1>انضم الينا كعميل !</h1>
-
+        {errors !== null ? <Alert variant="danger">{errors}</Alert> : null}
         <div className="form-group">
           <input
             type="text"
@@ -60,6 +58,7 @@ const Signup_Customer = () => {
             name="fname"
             value={fname}
             onChange={handleChange}
+            required
           />
         </div>
 
@@ -71,6 +70,7 @@ const Signup_Customer = () => {
             name="lname"
             value={lname}
             onChange={handleChange}
+            required
           />
         </div>
 
@@ -79,9 +79,10 @@ const Signup_Customer = () => {
             type="number"
             className="form-control"
             placeholder="رقم الموبايل"
-            name ="phone"
+            name="phone"
             value={phone}
             onChange={handleChange}
+            required
           />
         </div>
 
@@ -89,21 +90,24 @@ const Signup_Customer = () => {
           <input
             type="email"
             className="form-control"
-            name="email" 
+            name="email"
             placeholder="البريد الالكتروني"
             value={email}
             onChange={handleChange}
+            required
           />
         </div>
 
         <div className="form-group">
-          <input type="text"
-           className="form-control"
+          <input
+            type="text"
+            className="form-control"
             placeholder="العنوان"
             name="address"
             value={address}
             onChange={handleChange}
-            />
+            required
+          />
         </div>
 
         <div className="form-group">
@@ -114,6 +118,7 @@ const Signup_Customer = () => {
             name="password"
             value={password}
             onChange={handleChange}
+            required
           />
         </div>
 

@@ -1,5 +1,5 @@
-import Axios from "axios";
-import React, { Component } from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import {
   Jumbotron,
   Container,
@@ -7,105 +7,55 @@ import {
   Modal,
   InputGroup,
   FormControl,
+  NavLink,
 } from "react-bootstrap";
 import "./Services.css";
+import { Link } from "react-router-dom";
 
-class Services extends Component {
-  handleShow() {
-    this.setState({ show: true });
-  }
-  handleClose() {
-    this.setState({ show: false });
-  }
+const url = "https://services-works.herokuapp.com/api/jobs";
 
-  state = {
-    works: [],
-  };
-  componentDidMount = () => {
-    Axios.get("js/data.json").then((res) => {
-      this.setState({ works: res.data.works });
+const Services = () => {
+  const [jobs, setJobs] = useState([]);
+  useEffect(() => {
+    const res = axios.get(`${url}`).then((res) => {
+      setJobs(res.data.jobs);
     });
-  };
+  }, []);
+  return (
+    <React.Fragment>
+      <Jumbotron fluid>
+        <Container>
+          <h2>صنايعي خبره : خدمتنا</h2>
+          <p>
+            صنايعي خبره هو بوابة اى حرفه , وعشان نضمن اننا نكون حلقة وصل فعالة
+            اعتمدنا على تحقيق الفرص للصنايعي والعميل
+          </p>
+          <hr />
+        </Container>
+      </Jumbotron>
+      <div className="work">
+        <div className="container">
+          {jobs.map((item) => {
+            return (
+              <div className="product">
+                <div className="imgbox">
+                  <img src={item.image} alt="watch" />
+                </div>
+                <div className="content">
+                  <h2>{item.name}</h2>
+                  <br />
 
-  render() {
-    const worksList = this.state.works.map((workItem) => {
-      return (
-        <React.Fragment>
-          <div className="product">
-            <div className="imgbox">
-              <img src={workItem.image_body} alt="watch" />
-            </div>
-            <div className="content">
-              <h2>{workItem.title}</h2>
-              <br />
-
-              <Button
-                onClick={() => {
-                  this.handleShow();
-                }}
-              >
-                اطلب الان
-              </Button>
-
-              <Modal show={this.state.show}>
-                <Modal.Header>ادخال بيانات</Modal.Header>
-                <Modal.Body>
-                  <InputGroup className="mb-3">
-                    <InputGroup.Prepend>
-                      <InputGroup.Text>
-                        الاسم الاول والاسم الاخير
-                      </InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <FormControl />
-                    <FormControl />
-                  </InputGroup>
-
-                  <InputGroup className="mb-3">
-                    <FormControl
-                      placeholder="ادخل البريد الالكتروني"
-                      aria-label="ادخل البريد الالكتروني"
-                      aria-describedby="basic-addon2"
-                    />
-                    <InputGroup.Append>
-                      <InputGroup.Text id="basic-addon2">
-                        @gmail.com
-                      </InputGroup.Text>
-                    </InputGroup.Append>
-                  </InputGroup>
-                </Modal.Body>
-                <Modal.Footer>
-                  <Button
-                    onClick={() => {
-                      this.handleClose();
-                    }}
-                  >
-                    Close Modal
-                  </Button>
-                </Modal.Footer>
-              </Modal>
-            </div>
-          </div>
-        </React.Fragment>
-      );
-    });
-
-    return (
-      <React.Fragment>
-        <Jumbotron fluid>
-          <Container>
-            <h2>صنايعي خبره : خدمتنا</h2>
-            <p>
-              صنايعي خبره هو بوابة اى حرفه , وعشان نضمن اننا نكون حلقة وصل فعالة
-              اعتمدنا على تحقيق الفرص للصنايعي والعميل
-            </p>
-            <hr />
-          </Container>
-        </Jumbotron>
-        <div className="work">
-          <div className="container">{worksList}</div>
+                  <Link to={`/profilecraftman/${item._id}`} className="choose">
+                    اختار الصنايعى
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
         </div>
-      </React.Fragment>
-    );
-  }
-}
+      </div>
+    </React.Fragment>
+  );
+};
+
 export default Services;
