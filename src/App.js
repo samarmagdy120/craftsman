@@ -15,28 +15,30 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import setAuthToken from './utils/setAuthToken'
 import AuthState from "./context/auth/AuthState";
 import JobState from "./context/jobs/JobState";
+import ReviewState from "./context/reviews/reviewState";
 import AllCrafts from "./Components/allcraft/AllCrafts";
 import Profilecraftman from "./Components/profilecraftman/Profilecraftman";
 
 function App() {
 
-  useEffect(() => {
-    // const isAuth = async () => {
-      let token = localStorage.token
-      // console.log(token)
-      if (token) {
-        setAuthToken(token)
-        console.log('isAuthed');
-      } else {
-        console.log('is not Authed')
-      }
-    // }
-      // isAuth().then(()=>console.log(''))
-  }, [])
+  // useEffect(() => {
+  //   // const isAuth = async () => {
+  //     let token = localStorage.token
+  //     // console.log(token)
+  //     if (token) {
+  //       setAuthToken(token)
+  //       console.log('isAuthed');
+  //     } else {
+  //       console.log('is not Authed')
+  //     }
+  //   // }
+  //     // isAuth()
+  // }, [])
 
   return (
     <AuthState>
       <JobState>
+        <ReviewState>
         <Router>
           <Navbartop />
           <NavBar />
@@ -56,6 +58,7 @@ function App() {
           </Switch>
           <Footer />
         </Router>
+        </ReviewState>
       </JobState>
     </AuthState>
   );

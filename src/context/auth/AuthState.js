@@ -13,6 +13,10 @@ import {
   LIST_USERS_FAIL,
   CLEAR_ERRORS,
   RETURN_SECCESS,
+  ADD_PROFILE_IMAGE_FAIL,
+  ADD_PROFILE_IMAGE_SUCCES,
+  PROFILE_DATA_FAIL,
+  PROFILE_DATA_SUCCESS,
   USER_LOGOUT
 } from "../types";
 
@@ -28,6 +32,7 @@ const AuthState = (props) => {
     errors: null,
     success : false,
     user : null,
+    userProfile : null,
     users :[]
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
@@ -141,6 +146,41 @@ const AuthState = (props) => {
     }
   }
 
+  const uploadProfileImage = async(image) =>{
+    const formdata = new FormData();
+    formdata.append('image',image)
+    const config = {
+      header: {
+        "Authorization": "Bearer "+ localStorage.token,
+        'Content-Type': 'multipart/form-data',
+      },
+    }; 
+    try {
+    await axios.put(`${url}/update-image`,config)
+    dispatch({ type: ADD_PROFILE_IMAGE_SUCCES });
+    } catch (error) {
+      dispatch({
+        type: ADD_PROFILE_IMAGE_FAIL,
+        payload: error.message
+      });
+    }
+  }
+
+  const getProfileData = async(id) =>{
+   try {
+     const res = await axios.get(`${url}/profile/${id}`);
+     dispatch({
+       type : PROFILE_DATA_SUCCESS,
+       payload : res.data.user
+     })
+   } catch (error) {
+    dispatch({
+      type: PROFILE_DATA_FAIL,
+      payload: error.message
+    });
+   }
+  }
+
   const clearError=()=>{
     dispatch({ type: CLEAR_ERRORS });
   }
@@ -165,11 +205,14 @@ const AuthState = (props) => {
         users : state.users,
         success : state.success,
         token : state.token,
+        userProfile : state.userProfile,
         registerCraftMan,
         login,
         registerClient,
         getUserData,
         getUsersViaJobID,
+        uploadProfileImage,
+        getProfileData,
         clearError,
         refershSuccess,
         logout

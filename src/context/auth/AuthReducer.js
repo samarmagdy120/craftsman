@@ -9,6 +9,8 @@ import {
   LIST_USERS_FAIL,
   CLEAR_ERRORS,
   RETURN_SECCESS,
+  PROFILE_DATA_SUCCESS,
+  PROFILE_DATA_FAIL,
   USER_LOGOUT 
 } from "../types";
 
@@ -67,6 +69,16 @@ export default (state, action) => {
         ...state,
         success : false, 
       }
+    case PROFILE_DATA_SUCCESS : return {
+        ...state,
+        success : true,
+        userProfile : action.payload  
+    }
+    case PROFILE_DATA_FAIL : return {
+      ...state,
+      success : false,
+      errors : action.payload  
+  }
     case USER_LOGOUT :
       localStorage.removeItem("token");
       return{
