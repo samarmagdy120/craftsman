@@ -1,34 +1,33 @@
-.nav-top{
-    background-color: #F3F6FF;
-    
+.nav-top {
+  background-color: #f3f6ff;
+  direction: ltr;
 }
-.nav-icon{
-    display: flex;
+.nav-icon {
+  display: flex;
 }
-.top-area-block.top-area-socials.socials-colored-hover{
-    width: 50%;
-    padding: 0 10px;
+.top-area-block.top-area-socials.socials-colored-hover {
+  width: 50%;
+  padding: 0 10px;
 }
-.gem-contacts-item.gem-contacts-phone{
-    height: 100%;
-    font-size: 20px;
-    
+.gem-contacts-item.gem-contacts-phone {
+  height: 100%;
+  font-size: 20px;
 }
-.gem-contacts-item.gem-contacts-phone a{
-    color: #F3C623 !important;
-    font-weight: 600;
+.gem-contacts-item.gem-contacts-phone a {
+  color: #f3c623 !important;
+  font-weight: 600;
 }
-.socials{
-    max-width: 40%;
-    float: right;
-    display: flex;
-    justify-content: center;
+.socials {
+  max-width: 40%;
+  float: right;
+  display: flex;
+  justify-content: center;
 }
-.socials a{
-    
-    color: #F3C623 !important;
-    font-size: 20px;
+.socials a {
+  color: #f3c623 !important;
+  font-size: 20px;
 }
-.socials a:hover , .gem-contacts-item.gem-contacts-phone a:hover{
-    color: #117680 !important;
+.socials a:hover,
+.gem-contacts-item.gem-contacts-phone a:hover {
+  color: #117680 !important;
 }

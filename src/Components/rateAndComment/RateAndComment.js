@@ -1,14 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
+import Rate from "../rate/Rate";
 import "./RateAndComment.css";
-const RateAndComment = () => {
-  const state = {
-    profileImg:
-      "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+const RateAndComment = ({ state }) => {
+  const [comment, setComment] = useState([]);
+  const [current, setCurrent] = useState([]);
+
+  const [rating, setRating] = useState(0);
+  const [rating2, setRating2] = useState(0);
+
+  const handleChange = (e) => {
+    setCurrent({ ...comment, [e.target.name]: e.target.value });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setComment({ ...current, current });
   };
   return (
     <div className="RateAndComment">
       <div>
-        <input type="text" placeholder="أكتب تعليقا ......................" />
+        <form onSubmit={handleChange}>
+          <input
+            type="text"
+            placeholder="أكتب تعليقا ......................"
+            name="comment"
+            onChange={handleChange}
+          />
+        </form>
 
         <ul className="list-unstyled comment-view">
           <li>
@@ -20,11 +38,13 @@ const RateAndComment = () => {
                 width: "43px",
                 textAlign: "center",
                 position: "relative",
-                top: -"18px",
+                top: "-41px",
               }}
             />
             <div className="comment">
               <h3>mohamed ahmed</h3>
+              <Rate rating={rating2} onRating={(rate) => setRating2(rate)} />
+
               <p>اتيتبينبنىيب منمنيسن سينسي</p>
             </div>
           </li>
@@ -37,11 +57,13 @@ const RateAndComment = () => {
                 width: "43px",
                 textAlign: "center",
                 position: "relative",
-                top: -"18px",
+                top: "-41px",
               }}
             />
             <div className="comment">
               <h3>mohamed ahmed</h3>
+              <Rate rating={rating} onRating={(rate) => setRating(rate)} />
+
               <p>اتيتبينبنىيب منمنيسن سينسي</p>
             </div>
           </li>

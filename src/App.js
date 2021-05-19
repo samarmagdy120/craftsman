@@ -12,42 +12,40 @@ import Signup_Customer from "./Components/Registration/Customer/Signup_Customer"
 import Login from "./Components/Registration/Login/Login";
 import Footer from "./Components/Footer/footer";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import setAuthToken from './utils/setAuthToken'
+import setAuthToken from "./utils/setAuthToken";
 import AuthState from "./context/auth/AuthState";
 import JobState from "./context/jobs/JobState";
-import ReviewState from "./context/reviews/reviewState";
 import AllCrafts from "./Components/allcraft/AllCrafts";
 import Profilecraftman from "./Components/profilecraftman/Profilecraftman";
 
 function App() {
-
-  // useEffect(() => {
-  //   // const isAuth = async () => {
-  //     let token = localStorage.token
-  //     // console.log(token)
-  //     if (token) {
-  //       setAuthToken(token)
-  //       console.log('isAuthed');
-  //     } else {
-  //       console.log('is not Authed')
-  //     }
-  //   // }
-  //     // isAuth()
-  // }, [])
+  useEffect(() => {
+    // const isAuth = async () => {
+    let token = localStorage.token;
+    // console.log(token)
+    if (token) {
+      setAuthToken(token);
+      console.log("isAuthed");
+    } else {
+      console.log("is not Authed");
+    }
+    // }
+    // isAuth().then(()=>console.log(''))
+  }, []);
 
   return (
     <AuthState>
       <JobState>
-        <ReviewState>
         <Router>
           <Navbartop />
           <NavBar />
           <ScrollToTop />
 
           <Switch>
-            <Route exact path="/" component={AllCrafts} />
+            <Route exact path="/" component={Home} />
             <Route path="/services" component={Services} />
             <Route path="/profilecraftman/:id" component={Profilecraftman} />
+            <Route path="/allCrafts/:id" component={AllCrafts} />
 
             <Route path="/About" component={About} />
             <Route path="/Contact" component={Contact} />
@@ -58,7 +56,6 @@ function App() {
           </Switch>
           <Footer />
         </Router>
-        </ReviewState>
       </JobState>
     </AuthState>
   );

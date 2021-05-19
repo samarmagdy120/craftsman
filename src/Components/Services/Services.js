@@ -45,7 +45,7 @@ const Services = () => {
                   <h2>{item.name}</h2>
                   <br />
 
-                  <Link to={`/profilecraftman/${item._id}`} className="choose">
+                  <Link to={`/allCrafts/${item._id}`} className="choose">
                     اختار الصنايعى
                   </Link>
                 </div>

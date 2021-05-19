@@ -1,4 +1,5 @@
-import React,{useEffect,useContext} from "react";
+import React, { useEffect, useContext, useState } from "react";
+import axios from "axios";
 import {
   MDBRow,
   MDBCol,
@@ -14,60 +15,63 @@ import Esraa2 from "../img/about/Esraa2.jpeg";
 import { Jumbotron, Container } from "react-bootstrap";
 import "../About/About.css";
 import { AuthContext } from "../../context/auth/AuthState";
+import { Link } from "react-router-dom";
 
-const AllCrafts = () => {
-  const {clearError,refershSuccess}=useContext(AuthContext);
-  useEffect(()=>{
+const url = "https://services-works.herokuapp.com/api/auth/profile/";
+
+const AllCrafts = ({ match }) => {
+  const { clearError, refershSuccess, getUsersViaJobID, users } =
+    useContext(AuthContext);
+
+  const id = match.params.id;
+  // console.log(id);
+
+  useEffect(() => {
     clearError();
     refershSuccess();
-  })
+    getUsersViaJobID(id);
+  }, []);
+
+  console.log(users);
+
   return (
-    <MDBCard className=" my-5 px-5 pb-5 text-center">
-      <MDBCardBody>
-        <Jumbotron fluid>
-          <Container>
-            <h2>أختار اصنايعى</h2>
-            <p>صنايعي خبره هو بوابة اى حرفه</p>
-            <hr />
-          </Container>
-        </Jumbotron>
+    <div style={{ marginTop: "-50px", marginBottom: "-50px" }}>
+      <MDBCard className=" my-5 px-5 pb-5 text-center">
+        <MDBCardBody>
+          <Jumbotron fluid>
+            <Container>
+              <h2>أختار اصنايعى</h2>
+              <p>صنايعي خبره هو بوابة اى حرفه</p>
+              <hr />
+            </Container>
+          </Jumbotron>
 
-        <div className="team-card">
-          <MDBRow>
-            <MDBCol lg="3" md="6" className="mb-lg-0 mb-5">
-              <img src={Mohamed1} width="190px" height="200px" alt="" />
-              <h5 className="font-weight-bold mt-4 mb-3">
-                محمد احمد عبد الرحيم
-              </h5>
-              <p className="text-uppercase blue-text">rate</p>
-            </MDBCol>
-
-            <MDBCol lg="3" md="6" className="mb-lg-0 mb-5">
-              <img src={Mohamed1} width="190px" height="200px" alt="" />
-              <h5 className="font-weight-bold mt-4 mb-3">
-                محمد احمد عبد الرحيم
-              </h5>
-              <p className="text-uppercase blue-text">rate</p>
-            </MDBCol>
-
-            <MDBCol lg="3" md="6" className="mb-lg-0 mb-5">
-              <img src={Mohamed1} width="190px" height="200px" alt="" />
-              <h5 className="font-weight-bold mt-4 mb-3">
-                محمد احمد عبد الرحيم
-              </h5>
-              <p className="text-uppercase blue-text">rate</p>
-            </MDBCol>
-            <MDBCol lg="3" md="6" className="mb-lg-0 mb-5">
-              <img src={Mohamed1} width="190px" height="200px" alt="" />
-              <h5 className="font-weight-bold mt-4 mb-3">
-                محمد احمد عبد الرحيم
-              </h5>
-              <p className="text-uppercase blue-text">rate</p>
-            </MDBCol>
-          </MDBRow>
-        </div>
-      </MDBCardBody>
-    </MDBCard>
+          <div className="team-card">
+            <MDBRow>
+              {users.map((item) => {
+                return (
+                  <MDBCol lg="3" md="6" className="mb-lg-0 mb-5">
+                    <img src={item.image} width="190px" height="200px" alt="" />
+                    <h5 className="font-weight-bold mt-4 mb-3">
+                      {item.fname}
+                      {item.lname}{" "}
+                    </h5>
+                    <p className="text-uppercase blue-text">rate</p>
+                    <Link
+                      to={`/profilecraftman/${item._id}`}
+                      className="choose"
+                      style={{ width: "80%", margin: "auto" }}
+                    >
+                      تواصل معه
+                    </Link>
+                  </MDBCol>
+                );
+              })}
+            </MDBRow>
+          </div>
+        </MDBCardBody>
+      </MDBCard>
+    </div>
   );
 };
 

@@ -36,7 +36,7 @@ const ReviewState = (props) => {
        }
    }
 
-   const addReviews = async(id) =>{
+   const addReviews = async(id,review) =>{
        const config ={
            headers :{
             "Authorization": "Bearer "+ localStorage.token,
@@ -44,7 +44,7 @@ const ReviewState = (props) => {
            }
        }
     try {
-        const res = await axios.post(`${url}/${id}`,config)
+        const res = await axios.post(`${url}/${id}`,review,config)
         dispatch({
             type : ADD_REVIEW_SUCCESS,
             payload : res.data 

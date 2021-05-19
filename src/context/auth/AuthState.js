@@ -133,7 +133,7 @@ const AuthState = (props) => {
  
   const getUsersViaJobID=async(id)=>{
     try {
-      const res = await axios.post(`${url}/${id}`);
+      const res = await axios.get(`${url}/${id}`);
       dispatch({
         type: LIST_USERS_SUCCESS,
         payload: res.data.users,
