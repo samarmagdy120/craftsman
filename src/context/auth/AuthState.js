@@ -156,7 +156,7 @@ const AuthState = (props) => {
       },
     }; 
     try {
-    await axios.put(`${url}/update-image`,config)
+    await axios.put(`${url}/update-image`,formdata,config)
     dispatch({ type: ADD_PROFILE_IMAGE_SUCCES });
     } catch (error) {
       dispatch({
